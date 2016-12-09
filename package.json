@@ -1,0 +1,25 @@
+{
+  "name": "sparkles",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "Robbie Pitts <me@robbie-pitts.com>",
+  "license": "MIT",
+  "dependencies": {
+    "glimmer-engine": "^0.19.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.20.0",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.2.9",
+    "babel-plugin-transform-function-bind": "^6.8.0",
+    "babel-preset-es2015": "^6.18.0",
+    "eslint": "^3.11.1",
+    "eslint-loader": "^1.6.1",
+    "eslint-plugin-prefer-bind-operator": "^0.0.4",
+    "expose-loader": "^0.7.1",
+    "gazpacho": "https://github.com/robbiepitts/gazpacho",
+    "qunit": "^0.9.1",
+    "testem": "^1.13.0",
+    "webpack": "^1.14.0"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "framework": "custom",
+  "test_page": "tests/features/index.html",
+  "src_files": [
+    "tests/features/index.js",
+    "tests/features/**/*-feature.js",
+    "tests/features/steps-defs/**/*-steps.js",
+    "src/**/*.js"
+  ],
+  "serve_files": [
+      "tmp/features.js",
+      "tmp/adapter.js"
+  ],
+  "before_tests": "webpack --config webpack.gazpacho.config.js"
+}
