@@ -1,0 +1,11 @@
+{
+  "framework": "qunit",
+  "src_files": [
+    "tests/**/*-test.js",
+    "src/**/*.js"
+  ],
+  "serve_files": [
+    "tmp/tests.js"
+  ],
+  "before_tests": "webpack --config webpack.testem.config.js"
+}

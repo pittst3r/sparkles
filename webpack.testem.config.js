@@ -1,10 +1,10 @@
 var webpack = require("webpack");
 var path = require('path');
+var glob = require('glob').sync;
 
 module.exports = {
   entry: {
-    features: './tests/features/index.js',
-    adapter: './tests/features/testem-adapter.js',
+    tests: glob('tests/**/*-test.js'),
   },
   output: {
     path: path.resolve(__dirname, 'tmp'),
@@ -17,29 +17,28 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: 'babel',
         query: {
-          presets: ['es2015'],
-        }
+          presets: ['es2015',],
+        },
       },
       {
         test: /\.js$/,
         loader: 'eslint-loader',
         exclude: /node_modules/,
       },
-      {
-        test: require.resolve('gazpacho'),
-        loader: 'expose-loader?gazpacho',
-      },
     ],
   },
+  plugins: [],
   resolve: {
     root: [
       path.resolve(__dirname),
       path.resolve(__dirname, 'src'),
       path.resolve(__dirname, 'node_modules/glimmer-engine/dist/node_modules'),
     ],
-    modulesDirectories: ['node_modules',],
+    modulesDirectories: [
+      'node_modules',
+    ],
   },
   eslint: {
     configFile: '.eslintrc.js',

@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "Robbie Pitts <me@robbie-pitts.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
     "glimmer-engine": "^0.19.3"
   },
@@ -17,7 +20,7 @@
     "eslint-loader": "^1.6.1",
     "eslint-plugin-prefer-bind-operator": "^0.0.4",
     "expose-loader": "^0.7.1",
-    "gazpacho": "https://github.com/robbiepitts/gazpacho",
+    "glob": "^7.1.1",
     "qunit": "^0.9.1",
     "testem": "^1.13.0",
     "webpack": "^1.14.0"
