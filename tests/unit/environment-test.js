@@ -17,17 +17,17 @@ test('#compile', (assert) => {
 });
 
 test('#registerComponent', (assert) => {
-  assert.expect(1);
+  assert.expect(2);
 
   let env = new Environment(document);
   let name = 'foo';
-  let templateString = '<div>{{thing}}</div>';
-  let component;
+  let componentDefinition;
 
-  env.registerComponent(name, ComponentMock, templateString);
-  component = env.getComponentDefinition([name,]);
+  env.registerComponent(name, CoolComponent);
+  componentDefinition = env.getComponentDefinition([name,]);
 
-  assert.ok(component);
+  assert.ok(componentDefinition);
+  assert.equal(componentDefinition.layoutString, '<p>foo</p>');
 });
 
 test('#hasComponentDefinition', (assert) => {
@@ -38,7 +38,7 @@ test('#hasComponentDefinition', (assert) => {
 
   assert.notOk(env.hasComponentDefinition([name,]));
 
-  env.registerComponent(name, ComponentMock, '');
+  env.registerComponent(name, CoolComponent);
 
   assert.ok(env.hasComponentDefinition([name,]));
 });
@@ -46,14 +46,16 @@ test('#hasComponentDefinition', (assert) => {
 test('#getComponentDefinition', (assert) => {
   let env = new Environment(document);
   let name = 'foo';
-  let templateString = '<div>{{thing}}</div>';
   let component;
 
-  env.registerComponent(name, ComponentMock, templateString);
+  env.registerComponent(name, CoolComponent);
   component = env.getComponentDefinition([name,]);
 
   assert.ok(component);
 });
 
-class ComponentMock {
+class CoolComponent {
+  static get layout() {
+    return '<p>foo</p>';
+  }
 }

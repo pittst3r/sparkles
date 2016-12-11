@@ -5,6 +5,6 @@ import {
 export default class ComponentDefinition extends GlimmerComponentDefinition {
   constructor(name, manager, componentClass, layout) {
     super(name, manager, componentClass);
-    this.layoutString = layout;
+    this.layoutString = componentClass.layout;
   }
 }

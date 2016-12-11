@@ -25,9 +25,9 @@ export default class Environment extends GlimmerEnvironment {
     this.compiledLayouts = {};
   }
 
-  registerComponent(name, componentClass, layout) {
+  registerComponent(name, componentClass) {
     let manager = new ComponentManager();
-    let definition = new ComponentDefinition(name, manager, componentClass, layout);
+    let definition = new ComponentDefinition(name, manager, componentClass);
 
     this._components[name] = definition;
   }

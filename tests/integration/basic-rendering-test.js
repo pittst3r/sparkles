@@ -18,7 +18,13 @@ test('renders a simple component', (assert) => {
 
   let context = setupContext({ message: 'Hello world', });
 
-  context::registerComponent('cool-component', CoolComponent, '<p>{{yield}}</p>');
+  class YieldingComponent {
+    static get layout() {
+      return '<p>{{yield}}</p>';
+    }
+  }
+
+  context::registerComponent('cool-component', YieldingComponent);
   context::render('<cool-component>{{message}}</cool-component>');
 
   assert.equal(context.root.innerHTML, '<p>Hello world</p>');
@@ -29,7 +35,13 @@ test('renders a component with args', (assert) => {
 
   let context = setupContext({ message: 'Hello world', });
 
-  context::registerComponent('cool-component', CoolComponent, '<p>{{@message}}</p>');
+  class ArgsComponent {
+    static get layout() {
+      return '<p>{{@message}}</p>';
+    }
+  }
+
+  context::registerComponent('cool-component', ArgsComponent);
   context::render('<cool-component @message={{message}} />');
 
   assert.equal(context.root.innerHTML, '<p>Hello world</p>');
@@ -53,12 +65,4 @@ function render(templateString) {
   this.env.begin();
   template.render(this.reference, this.root, new TestDynamicScope());
   this.env.commit();
-}
-
-class CoolComponent {
-  constructor(args) {
-    if (typeof args === 'object') {
-      Object.assign(this, args);
-    }
-  }
 }
