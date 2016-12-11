@@ -2,30 +2,30 @@ import {
   UpdatableReference,
 } from 'glimmer-object-reference';
 import {
-  TestEnvironment,
   TestDynamicScope,
 } from 'glimmer-test-helpers';
+import Environment from 'environment';
 
 const {
   module,
   test,
 } = QUnit;
 
-module('basic rendering');
+module('Integration | basic rendering');
 
 test('renders a simple component', (assert) => {
   assert.expect(1);
 
-  let context = setupContext({ message: 'Hello world' });
+  let context = setupContext({ message: 'Hello world', });
 
-  context::registerComponent('cool-component', undefined, '<p>{{yield}}</p>');
+  context::registerComponent('cool-component', MockComponent, '<p>{{yield}}</p>');
   context::render('<cool-component>{{message}}</cool-component>');
 
   assert.equal(context.root.innerHTML, '<p>Hello world</p>');
 });
 
 function setupContext(context) {
-  let env = new TestEnvironment();
+  let env = new Environment(document);
   let root = env.getDOM().createElement('div');
   let reference = new UpdatableReference(context);
 
@@ -33,7 +33,7 @@ function setupContext(context) {
 }
 
 function registerComponent(...args) {
-  this.env.registerBasicComponent(...args);
+  this.env.registerComponent(...args);
 }
 
 function render(templateString) {
@@ -42,4 +42,7 @@ function render(templateString) {
   this.env.begin();
   template.render(this.reference, this.root, new TestDynamicScope());
   this.env.commit();
+}
+
+class MockComponent {
 }
