@@ -7,7 +7,7 @@ import {
 import ComponentLayoutCompiler from 'component-layout-compiler';
 
 export default class ComponentManager {
-  prepareArgs(definition, evaluatedArgs) {
+  prepareArgs(_definition, evaluatedArgs) {
     return evaluatedArgs;
   }
 
