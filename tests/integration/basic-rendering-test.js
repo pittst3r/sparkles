@@ -47,6 +47,27 @@ test('renders a component with args', (assert) => {
   assert.equal(context.root.innerHTML, '<p>Hello world</p>');
 });
 
+test('updates with changes', (assert) => {
+  assert.expect(2);
+
+  let context = setupContext({ message: 'Hello world', });
+
+  class ArgsComponent {
+    static get layout() {
+      return '<p>{{@message}}</p>';
+    }
+  }
+
+  context::registerComponent('cool-component', ArgsComponent);
+  context::render('<cool-component @message={{message}} />');
+
+  assert.equal(context.root.innerHTML, '<p>Hello world</p>');
+
+  context::update({ message: 'Hello world!' });
+
+  assert.equal(context.root.innerHTML, '<p>Hello world!</p>');
+});
+
 function setupContext(context) {
   let env = new Environment(document);
   let root = env.getDOM().createElement('div');
@@ -63,6 +84,13 @@ function render(templateString) {
   let template = this.env.compile(templateString);
 
   this.env.begin();
-  template.render(this.reference, this.root, new TestDynamicScope());
+  this.renderResult = template.render(this.reference, this.root, new TestDynamicScope());
+  this.env.commit();
+}
+
+function update(newReferenceContent) {
+  this.reference.update(newReferenceContent);
+  this.env.begin();
+  this.renderResult.rerender();
   this.env.commit();
 }
