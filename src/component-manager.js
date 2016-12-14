@@ -11,7 +11,7 @@ export default class ComponentManager {
     return evaluatedArgs;
   }
 
-  create(env, definition, evaluatedArgs) {
+  create(_env, definition, evaluatedArgs) {
     let klass = definition.ComponentClass;
 
     return new klass(evaluatedArgs.named.value());

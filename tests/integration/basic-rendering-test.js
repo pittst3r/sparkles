@@ -1,10 +1,5 @@
-import {
-  UpdatableReference,
-} from 'glimmer-object-reference';
-import {
-  TestDynamicScope,
-} from 'glimmer-test-helpers';
-import Environment from 'environment';
+import App from 'app';
+import $ from 'jquery';
 
 const {
   module,
@@ -16,7 +11,7 @@ module('Integration | basic rendering');
 test('renders a simple component', (assert) => {
   assert.expect(1);
 
-  let context = setupContext({ message: 'Hello world', });
+  let app = new App({ message: 'Hello world', });
 
   class YieldingComponent {
     static get layout() {
@@ -24,16 +19,16 @@ test('renders a simple component', (assert) => {
     }
   }
 
-  context::registerComponent('cool-component', YieldingComponent);
-  context::render('<cool-component>{{message}}</cool-component>');
+  app.registerComponent('cool-component', YieldingComponent);
+  app.render('<cool-component>{{message}}</cool-component>');
 
-  assert.equal(context.root.innerHTML, '<p>Hello world</p>');
+  assert.equal(app.root.innerHTML, '<p>Hello world</p>');
 });
 
 test('renders a component with args', (assert) => {
   assert.expect(1);
 
-  let context = setupContext({ message: 'Hello world', });
+  let app = new App({ message: 'Hello world', });
 
   class ArgsComponent {
     static get layout() {
@@ -41,16 +36,45 @@ test('renders a component with args', (assert) => {
     }
   }
 
-  context::registerComponent('cool-component', ArgsComponent);
-  context::render('<cool-component @message={{message}} />');
+  app.registerComponent('cool-component', ArgsComponent);
+  app.render('<cool-component @message={{message}} />');
 
-  assert.equal(context.root.innerHTML, '<p>Hello world</p>');
+  assert.equal(app.root.innerHTML, '<p>Hello world</p>');
 });
 
-test('updates with changes', (assert) => {
+test('renders computed properties', (assert) => {
   assert.expect(2);
 
-  let context = setupContext({ message: 'Hello world', });
+  let app = new App({ message: 'Hello world', });
+
+  class ArgsComponent {
+    static get layout() {
+      return '<p>{{upcasedMessage}}</p>';
+    }
+
+    constructor(attrs) {
+      this.attrs = attrs;
+    }
+
+    get upcasedMessage() {
+      return this.attrs.message.toUpperCase();
+    }
+  }
+
+  app.registerComponent('cool-component', ArgsComponent);
+  app.render('<cool-component @message={{message}} />');
+
+  assert.equal(app.root.innerHTML, '<p>HELLO WORLD</p>');
+
+  app.update({ message: 'Hello world!' });
+
+  assert.equal(app.root.innerHTML, '<p>HELLO WORLD!</p>');
+});
+
+test('rerenders with reference updates', (assert) => {
+  assert.expect(2);
+
+  let app = new App({ message: 'Hello world', });
 
   class ArgsComponent {
     static get layout() {
@@ -58,39 +82,70 @@ test('updates with changes', (assert) => {
     }
   }
 
-  context::registerComponent('cool-component', ArgsComponent);
-  context::render('<cool-component @message={{message}} />');
+  app.registerComponent('cool-component', ArgsComponent);
+  app.render('<cool-component @message={{message}} />');
 
-  assert.equal(context.root.innerHTML, '<p>Hello world</p>');
+  assert.equal(app.root.innerHTML, '<p>Hello world</p>');
 
-  context::update({ message: 'Hello world!' });
+  app.update({ message: 'Hello world!' });
 
-  assert.equal(context.root.innerHTML, '<p>Hello world!</p>');
+  assert.equal(app.root.innerHTML, '<p>Hello world!</p>');
 });
 
-function setupContext(context) {
-  let env = new Environment(document);
-  let root = env.getDOM().createElement('div');
-  let reference = new UpdatableReference(context);
+test('renders computed properties', (assert) => {
+  assert.expect(2);
 
-  return { env, root, reference, };
-}
+  let app = new App({ message: 'Hello world', });
 
-function registerComponent(...args) {
-  this.env.registerComponent(...args);
-}
+  class ArgsComponent {
+    static get layout() {
+      return '<p>{{upcasedMessage}}</p>';
+    }
 
-function render(templateString) {
-  let template = this.env.compile(templateString);
+    constructor(attrs) {
+      this.attrs = attrs;
+    }
 
-  this.env.begin();
-  this.renderResult = template.render(this.reference, this.root, new TestDynamicScope());
-  this.env.commit();
-}
+    get upcasedMessage() {
+      return this.attrs.message.toUpperCase();
+    }
+  }
 
-function update(newReferenceContent) {
-  this.reference.update(newReferenceContent);
-  this.env.begin();
-  this.renderResult.rerender();
-  this.env.commit();
-}
+  app.registerComponent('cool-component', ArgsComponent);
+  app.render('<cool-component @message={{message}} />');
+
+  assert.equal(app.root.innerHTML, '<p>HELLO WORLD</p>');
+
+  app.update({ message: 'Hello world!' });
+
+  assert.equal(app.root.innerHTML, '<p>HELLO WORLD!</p>');
+});
+
+test('performs actions', (assert) => {
+  assert.expect(2);
+
+  let app = new App({ message: 'Hello world', });
+
+  function updateMessage() {
+    app.update({ message: 'Hello world!', });
+  }
+
+  class CoolComponent {
+    static get layout() {
+      return '<button onclick={{updateMessage}}>{{@message}}</button>';
+    }
+
+    updateMessage() {
+      updateMessage();
+    }
+  }
+
+  app.registerComponent('cool-component', CoolComponent);
+  app.render('<cool-component @message={{message}} />');
+
+  assert.equal(app.root.innerHTML, '<button>Hello world</button>');
+
+  $(app.root).find('button').click();
+
+  assert.equal(app.root.innerHTML, '<button>Hello world!</button>');
+});
