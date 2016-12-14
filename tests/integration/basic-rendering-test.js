@@ -66,7 +66,9 @@ test('renders computed properties', (assert) => {
 
   assert.equal(app.root.innerHTML, '<p>HELLO WORLD</p>');
 
-  app.update({ message: 'Hello world!' });
+  app.update(() => {
+    return { message: 'Hello world!', };
+  });
 
   assert.equal(app.root.innerHTML, '<p>HELLO WORLD!</p>');
 });
@@ -87,7 +89,9 @@ test('rerenders with reference updates', (assert) => {
 
   assert.equal(app.root.innerHTML, '<p>Hello world</p>');
 
-  app.update({ message: 'Hello world!' });
+  app.update(() => {
+    return { message: 'Hello world!', };
+  });
 
   assert.equal(app.root.innerHTML, '<p>Hello world!</p>');
 });
@@ -116,7 +120,9 @@ test('renders computed properties', (assert) => {
 
   assert.equal(app.root.innerHTML, '<p>HELLO WORLD</p>');
 
-  app.update({ message: 'Hello world!' });
+  app.update(() => {
+    return { message: 'Hello world!', };
+  });
 
   assert.equal(app.root.innerHTML, '<p>HELLO WORLD!</p>');
 });
@@ -127,7 +133,9 @@ test('performs actions', (assert) => {
   let app = new App({ message: 'Hello world', });
 
   function updateMessage() {
-    app.update({ message: 'Hello world!', });
+    app.update(() => {
+      return { message: 'Hello world!', };
+    });
   }
 
   class CoolComponent {

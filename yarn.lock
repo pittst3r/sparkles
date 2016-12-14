@@ -2109,7 +2109,7 @@ expose-loader@^0.7.1:
   version "0.7.1"
   resolved "https://registry.npmjs.org/expose-loader/-/expose-loader-0.7.1.tgz#411ee89443aa682f8ea9d9111accf41bfd7e94d9"
 
-express@^4.10.7, express@^4.13.1:
+express@^4.10.7, express@^4.13.1, express@^4.14.0:
   version "4.14.0"
   resolved "https://registry.npmjs.org/express/-/express-4.14.0.tgz#c1ee3f42cdc891fb3dc650a8922d51ec847d0d66"
   dependencies:

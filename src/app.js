@@ -29,7 +29,10 @@ export default class App {
     this.env.commit();
   }
 
-  update(newState) {
+  update(updater) {
+    let currentState = this.reference.value();
+    let newState = updater(currentState);
+
     this.reference.update(newState);
     this::rerender();
   }
