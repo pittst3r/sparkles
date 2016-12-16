@@ -9,6 +9,7 @@ import {
 } from 'glimmer-compiler';
 import ComponentManager from 'component-manager';
 import ComponentDefinition from 'component-definition';
+import Iterable from 'iterable';
 
 export default class Environment extends GlimmerEnvironment {
   constructor(document) {
@@ -49,5 +50,28 @@ export default class Environment extends GlimmerEnvironment {
 
   hasHelper([helperName,]) {
     return helperName.length === 1 && (helperName in this._helpers);
+  }
+
+  iterableFor(ref, evaluatedArgs) {
+    let keyPath = evaluatedArgs.named.get('key').value();
+    let keyFor;
+
+    if (!keyPath) {
+      throw new Error('Must specify a key for #each');
+    }
+
+    switch (keyPath) {
+    case '@index':
+      keyFor = (_, index) => String(index);
+      break;
+    case '@primitive':
+      keyFor = item => String(item);
+      break;
+    default:
+      keyFor = item => item[keyPath];
+      break;
+    }
+
+    return new Iterable(ref, keyFor);
   }
 }

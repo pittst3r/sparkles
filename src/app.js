@@ -8,13 +8,13 @@ export default class App {
   constructor(initialState, options = {}) {
     let defaultOptions = {
       document,
-      rootElement: env => env.getDOM().createElement('div'),
+      root: null,
     };
     let parsedOptions = Object.assign({}, defaultOptions, options);
 
     this.env = new Environment(parsedOptions.document);
-    this.root = parsedOptions.rootElement(this.env);
-    this.reference = new UpdatableReference(initialState);
+    this.root = parsedOptions.root || this.env.getDOM().createElement('div');
+    this.reference = new UpdatableReference(JSON.parse(JSON.stringify(initialState)));
   }
 
   registerComponent(name, componentClass) {
