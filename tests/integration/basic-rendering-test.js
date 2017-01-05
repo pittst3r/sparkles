@@ -127,6 +127,30 @@ test('renders computed properties', (assert) => {
   assert.equal(app.root.innerHTML, '<p>HELLO WORLD!</p>');
 });
 
+test('renders nested components', (assert) => {
+  assert.expect(1);
+
+  let app = new App({});
+
+  class YieldingComponent {
+    static get layout() {
+      return '{{yield}}';
+    }
+  }
+
+  class OtherComponent {
+    static get layout() {
+      return '<p>Hello world</p>';
+    }
+  }
+
+  app.registerComponent('yielding-component', YieldingComponent);
+  app.registerComponent('other-component', OtherComponent);
+  app.render('<yielding-component><other-component></other-component></yielding-component>');
+
+  assert.equal(app.root.innerHTML, '<p>Hello world</p>');
+});
+
 test('performs actions', (assert) => {
   assert.expect(2);
 

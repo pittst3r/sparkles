@@ -1,5 +1,9 @@
 const ADD_ITEM = 'ADD_ITEM';
+const COMPLETE_ITEM = 'COMPLETE_ITEM';
+const DELETE_ITEM = 'DELETE_ITEM';
 
 export {
   ADD_ITEM,
+  COMPLETE_ITEM,
+  DELETE_ITEM,
 };

@@ -24,6 +24,8 @@ export default class Environment extends GlimmerEnvironment {
     this._helpers = {};
 
     this.compiledLayouts = {};
+
+    this.uselessAnchor = document.createElement('a');
   }
 
   registerComponent(name, componentClass) {
@@ -73,5 +75,10 @@ export default class Environment extends GlimmerEnvironment {
     }
 
     return new Iterable(ref, keyFor);
+  }
+
+  protocolForURL(url) {
+    this.uselessAnchor.href = url;
+    return this.uselessAnchor.protocol;
   }
 }

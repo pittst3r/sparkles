@@ -14,7 +14,7 @@ export default class App {
 
     this.env = new Environment(parsedOptions.document);
     this.root = parsedOptions.root || this.env.getDOM().createElement('div');
-    this.reference = new UpdatableReference(JSON.parse(JSON.stringify(initialState)));
+    this.reference = new UpdatableReference(deepCopyObject(initialState));
   }
 
   registerComponent(name, componentClass) {
@@ -33,7 +33,7 @@ export default class App {
     let currentState = this.reference.value();
     let newState = updater(currentState);
 
-    this.reference.update(newState);
+    this.reference.update(deepCopyObject(newState));
     this::rerender();
   }
 }
@@ -42,4 +42,8 @@ function rerender() {
   this.env.begin();
   this.renderResult.rerender();
   this.env.commit();
+}
+
+function deepCopyObject(obj) {
+  return JSON.parse(JSON.stringify(obj));
 }
