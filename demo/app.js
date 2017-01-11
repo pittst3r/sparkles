@@ -8,4 +8,9 @@ app.get('/', function(req, res) {
   res.sendFile('index.html', { root: __dirname });
 });
 
-app.listen(3000);
+app.listen(3000, function() {
+  console.log('');
+  console.log('•-----------------------•');
+  console.log('| http://localhost:3000 |');
+  console.log('•-----------------------•');
+});
