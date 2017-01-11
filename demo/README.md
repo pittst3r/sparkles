@@ -1,14 +1,13 @@
-From parent directory:
+First run this in the parent directory:
 
 ```
-$ webpack
+$ yarn build
 ```
 
-From this directory:
+Then run this from this directory:
 
 ```
-$ yarn
-$ webpack
-$ node app.js
-## Then visit localhost:3000
+$ yarn server
 ```
+
+Then visit localhost:3000
