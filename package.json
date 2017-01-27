@@ -9,7 +9,6 @@
     "test": "testem"
   },
   "dependencies": {
-    "glimmer-engine": "^0.19.3"
   },
   "devDependencies": {
     "babel-core": "^6.20.0",
@@ -22,6 +21,7 @@
     "eslint-plugin-prefer-bind-operator": "^0.0.4",
     "expose-loader": "^0.7.1",
     "express": "^4.14.0",
+    "glimmer-engine": "tildeio/glimmer#master",
     "glob": "^7.1.1",
     "jquery": "^3.1.1",
     "qunit": "^0.9.1",

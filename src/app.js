@@ -1,7 +1,7 @@
 import Environment from 'environment';
 import {
   UpdatableReference,
-} from 'glimmer-object-reference';
+} from '@glimmer/object-reference';
 import DynamicScope from 'dynamic-scope';
 
 export default class App {

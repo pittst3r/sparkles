@@ -1,9 +1,9 @@
 import {
   templateFactory,
-} from 'glimmer-runtime';
+} from '@glimmer/runtime';
 import {
   precompile,
-} from 'glimmer-compiler';
+} from '@glimmer/compiler';
 
 export default class ComponentLayoutCompiler {
   constructor(layoutString) {

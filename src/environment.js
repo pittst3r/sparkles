@@ -3,10 +3,10 @@ import {
   DOMChanges,
   DOMTreeConstruction,
   templateFactory,
-} from 'glimmer-runtime';
+} from '@glimmer/runtime';
 import {
   precompile,
-} from 'glimmer-compiler';
+} from '@glimmer/compiler';
 import ComponentManager from 'component-manager';
 import ComponentDefinition from 'component-definition';
 import Iterable from 'iterable';

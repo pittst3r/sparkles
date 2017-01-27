@@ -1,9 +1,9 @@
 import {
   UpdatableReference,
-} from 'glimmer-object-reference';
+} from '@glimmer/object-reference';
 import {
   compileLayout,
-} from 'glimmer-runtime';
+} from '@glimmer/runtime';
 import ComponentLayoutCompiler from 'component-layout-compiler';
 
 export default class ComponentManager {

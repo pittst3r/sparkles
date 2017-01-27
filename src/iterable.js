@@ -2,7 +2,7 @@ import EmptyIterator from 'empty-iterator';
 import ArrayIterator from 'array-iterator';
 import {
   UpdatableReference,
-} from 'glimmer-object-reference';
+} from '@glimmer/object-reference';
 
 const EMPTY_ITERATOR = new EmptyIterator();
 
